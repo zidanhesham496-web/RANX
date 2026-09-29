@@ -70,6 +70,9 @@ web_modules/
 .env.*
 !.env.example
 
+# Supabase local development
+.supabase/
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
