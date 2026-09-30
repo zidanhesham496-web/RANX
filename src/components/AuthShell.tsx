@@ -1,39 +1,29 @@
-import { RanxLogo } from "../components/RanxLogo";
-import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
-import { AuthNetwork } from "./AuthNetwork";
+import React from 'react';
 
-export function AuthShell({
-  eyebrow,
-  title,
-  description,
-  children,
-}: {
-  eyebrow?: string;
+interface AuthShellProps {
   title: string;
   description: string;
-  children: ReactNode;
-}) {
+  children: React.ReactNode;
+}
+
+export const AuthShell: React.FC<AuthShellProps> = ({ title, description, children }) => {
   return (
-    <main className="auth-page">
-      <div className="auth-atmosphere" aria-hidden="true">
-        <AuthNetwork />
-      </div>
-      <div className="auth-content">
-        <Link className="auth-brand" to="/" aria-label="RANX، الصفحة الرئيسية">
-          <span className="auth-infinity" aria-hidden="true">∞</span>
-          <RanxLogo />
-        </Link>
-        <section className="auth-panel">
-          <div className="auth-heading">
-            {eyebrow && <span className="eyebrow"><span className="status-dot" /> {eyebrow}</span>}
-            <h1>{title}</h1>
-            <p>{description}</p>
+    <div className="min-h-screen bg-[#0b0914] text-white flex flex-col justify-center items-center p-4 relative overflow-hidden">
+      <div className="w-full max-w-md space-y-8 z-10">
+        <div className="text-center space-y-2">
+          <div className="text-4xl text-purple-400 font-bold">∞</div>
+          <span className="text-3xl font-bold tracking-wider text-white">RANX</span>
+        </div>
+        <div className="bg-[#13111c] border border-slate-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+          <div className="text-center space-y-1">
+            <h1 className="text-2xl font-bold text-white">{title}</h1>
+            <p className="text-sm text-slate-400">{description}</p>
           </div>
           {children}
-        </section>
+        </div>
       </div>
-      <div className="auth-footer"><span>made by</span><strong>ZIDAN</strong></div>
-    </main>
+    </div>
   );
-}
+};
+
+export default AuthShell;

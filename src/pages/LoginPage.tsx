@@ -1,14 +1,10 @@
-import React from "react";
-import { AuthShell } from "../components/AuthShell";
-import { FormField } from "../components/FormField";
-import { RanxLogo } from "../components/RanxLogo";
+import React from 'react';
+import { AuthShell } from '../components/AuthShell';
+import { FormField } from '../components/FormField';
 
 export const LoginPage: React.FC = () => {
   return (
     <AuthShell title="مرحبًا بعودتك" description="سجّل الدخول إلى مساحتك في RANX">
-      <div className="flex justify-center mb-6">
-        <RanxLogo size="lg" />
-      </div>
       <form className="space-y-4">
         <FormField label="اسم المستخدم" placeholder="---" />
         <FormField label="كلمة المرور" type="password" placeholder="---" />
