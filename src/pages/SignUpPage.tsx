@@ -50,7 +50,7 @@ export default function SignUpPage() {
             <FormField
               id="name"
               label="الاسم الكامل"
-              placeholder="الاسم الذي سيظهر لك"
+              placeholder="---"
               autoComplete="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -61,7 +61,7 @@ export default function SignUpPage() {
               id="phone-number"
               label="رقم الهاتف"
               type="tel"
-              placeholder="+20 100 000 0000"
+              placeholder="---"
               autoComplete="tel"
               value={phoneNumber}
               onChange={(event) => setPhoneNumber(event.target.value)}
