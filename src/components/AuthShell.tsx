@@ -1,3 +1,4 @@
+import { RanxLogo } from "../components/RanxLogo";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { AuthNetwork } from "./AuthNetwork";
@@ -21,7 +22,7 @@ export function AuthShell({
       <div className="auth-content">
         <Link className="auth-brand" to="/" aria-label="RANX، الصفحة الرئيسية">
           <span className="auth-infinity" aria-hidden="true">∞</span>
-          <span className="auth-wordmark">RANX</span>
+          <RanxLogo />
         </Link>
         <section className="auth-panel">
           <div className="auth-heading">

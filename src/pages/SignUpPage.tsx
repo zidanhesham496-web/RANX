@@ -1,3 +1,4 @@
+import { RanxLogo } from "../components/RanxLogo";
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { AuthShell } from "../components/AuthShell";
