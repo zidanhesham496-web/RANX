@@ -29,7 +29,8 @@ export default function LoginPage() {
   };
 
   return (
-    <AuthShell title="مرحبًا بعودتك" description="سجّل الدخول إلى مساحتك في RANX.">
+    <AuthShell title="مرحبًا بعودتك" description="سجّل الدخول إلى مساحتك في .">
+      <RanxLogo />
       {!isSupabaseConfigured && <p className="notice notice-info" role="status">{supabaseConfigurationError}</p>}
       <form className="auth-form" onSubmit={handleSubmit}>
         <FormField

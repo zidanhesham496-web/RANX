@@ -37,6 +37,7 @@ export default function SignUpPage() {
 
   return (
     <AuthShell title="أنشئ مساحتك" description="خطوات قليلة، ومساحتك جاهزة لك.">
+      <RanxLogo />
       {success ? (
         <div className="success-panel" role="status">
           <span className="success-icon">✓</span>
