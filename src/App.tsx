@@ -134,7 +134,7 @@ export function App() {
   return (
     <div className="min-h-screen w-full bg-[#05070c] text-slate-100 flex items-center justify-center p-4 relative overflow-hidden font-sans">
       
-      {/* High Performance Interactive Neon Constellation Network Background */}
+      {/* Interactive Neon Constellation Network Background */}
       <ParticleBackground />
 
       {/* Background Ambient Illumination Blurs */}
