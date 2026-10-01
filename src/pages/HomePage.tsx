@@ -1,11 +1,10 @@
-import { DashboardShell } from "../components/DashboardShell";
 import { useAuth } from "../context/AuthContext";
 
 export default function HomePage() {
   const { profile } = useAuth();
 
   return (
-    <DashboardShell eyebrow="مساحة المستخدم" title={`أهلًا، ${profile?.name ?? ""}`}>
+    <div dir="rtl" className="space-y-5">
       <section className="welcome-panel">
         <div className="welcome-copy">
           <span className="panel-index">01 <span /> مساحة شخصية</span>
@@ -23,6 +22,6 @@ export default function HomePage() {
         <div><span>رقم الهاتف</span><strong>{profile?.phone_number}</strong></div>
         <div><span>نوع الحساب</span><strong>مستخدم</strong></div>
       </section>
-    </DashboardShell>
+    </div>
   );
 }

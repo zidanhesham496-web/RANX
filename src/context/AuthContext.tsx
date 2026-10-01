@@ -27,7 +27,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 const authEmailForUsername = (username: string) =>
-  `${username.trim().toLowerCase()}@auth.ranx.invalid`;
+  `${username.trim().toLowerCase()}@ranx.app`;
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
