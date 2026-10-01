@@ -34,7 +34,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   return (
     <div className="w-full max-w-[420px] mx-auto p-2 relative z-10" dir="ltr">
       {/* Container Card with Refined Glassmorphism */}
-      <div className="relative rounded-3xl bg-[#0b0d14]/85 backdrop-blur-2xl border border-purple-500/20 p-8 shadow-[0_0_60px_rgba(76,29,149,0.3)]">
+      <div className="relative rounded-3xl bg-transparent backdrop-blur-[2px] border border-purple-500/20 p-8 shadow-[0_0_60px_rgba(76,29,149,0.3)]">
         
         {/* Brand Header */}
         <div className="text-center mb-6">
@@ -239,8 +239,10 @@ export const AuthCard: React.FC<AuthCardProps> = ({
           </p>
         </div>
 
+
+      </div>
         {/* Footer Signature: Made by ZIDAN */}
-        <div className="mt-8 pt-5 border-t border-slate-800/60 flex flex-col items-center justify-center gap-0.5 select-none" dir="ltr">
+        <div className="fixed bottom-4 inset-x-0 z-10 flex flex-col items-center justify-center gap-0.5 select-none pointer-events-none" dir="ltr">
           <span className="text-[10px] tracking-[0.25em] font-medium text-slate-300 uppercase">
             made by
           </span>
@@ -248,8 +250,6 @@ export const AuthCard: React.FC<AuthCardProps> = ({
             ZIDAN
           </span>
         </div>
-
-      </div>
     </div>
   );
 };
