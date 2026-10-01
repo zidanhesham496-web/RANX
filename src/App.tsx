@@ -11,7 +11,7 @@ interface UserProfile {
   email?: string;
 }
 
-export function App() {
+export default function App() {
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,12 +35,14 @@ export function App() {
           username: metadata.username || session.user.email?.split('@')[0] || '',
           email: session.user.email,
         });
+      } else {
+        setUserProfile(null);
       }
     };
 
     checkSession();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription: authListener } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         const metadata = session.user.user_metadata || {};
         setUserProfile({
@@ -55,7 +57,7 @@ export function App() {
     });
 
     return () => {
-      authListener.subscription.unsubscribe();
+      authListener.unsubscribe();
     };
   }, []);
 
@@ -114,7 +116,7 @@ export function App() {
       }
     } catch (err: any) {
       console.error('Auth Error:', err);
-      setError(err.message || 'حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة لاحقاً.');
+      setError(err.message || 'حدث خطأ أثناء العملية، تأكد من البيانات.');
     } finally {
       setLoading(false);
     }
@@ -133,15 +135,11 @@ export function App() {
 
   return (
     <div className="min-h-screen w-full bg-[#05070c] text-slate-100 flex items-center justify-center p-4 relative overflow-hidden font-sans">
-      
-      {/* Interactive Neon Constellation Network Background */}
       <ParticleBackground />
 
-      {/* Background Ambient Illumination Blurs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-purple-900/15 rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-indigo-900/10 rounded-full blur-[110px] pointer-events-none z-0" />
 
-      {/* Logged In View */}
       {userProfile ? (
         <div className="w-full max-w-[440px] p-8 rounded-3xl bg-[#0b0d14]/90 backdrop-blur-2xl border border-purple-500/30 shadow-[0_0_50px_rgba(147,51,234,0.2)] text-center animate-fade-in relative z-10" dir="ltr">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
@@ -181,7 +179,6 @@ export function App() {
           </button>
         </div>
       ) : (
-        /* Auth Card Component */
         <AuthCard
           mode={authMode}
           onSubmit={handleSubmit}
@@ -195,5 +192,3 @@ export function App() {
     </div>
   );
 }
-
-export default App;
