@@ -4,8 +4,8 @@ import { CalendarDays, FileText, Home, ListChecks, User } from "lucide-react";
 const ITEMS = [
   { to: "/home", label: "Home", Icon: Home },
   { to: "/todo", label: "To-Do", Icon: ListChecks },
-  { to: "/tables", label: "Tables", Icon: CalendarDays },
   { to: "/source", label: "Source", Icon: FileText },
+  { to: "/tables", label: "Tables", Icon: CalendarDays },
   { to: "/profile", label: "Profile", Icon: User },
 ];
 

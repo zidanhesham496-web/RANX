@@ -18,7 +18,7 @@ export function AuthenticatedLayout() {
       <main className="relative mx-auto w-full max-w-2xl flex-1 px-5 pt-5">
         <Outlet />
       </main>
-      <div className="relative pb-28 pt-10">
+      <div className="relative pb-24 pt-6">
         <AppFooter />
       </div>
       <BottomNavigation />

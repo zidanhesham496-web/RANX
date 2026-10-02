@@ -1,8 +1,8 @@
-import { RanxWordmark } from "../RanxWordmark";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { Infinity as InfinityIcon, LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { RanxWordmark } from "../RanxWordmark";
 
 const PAGE_LABELS: Record<string, string> = {
   "/home": "Home",
@@ -34,12 +34,21 @@ export function AppHeader() {
       className="sticky top-0 z-30 border-b border-white/5 bg-[#09090f]/70 backdrop-blur-xl"
       style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
-      <div className="mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-5">
-        <div className="flex items-center gap-3">
-          <RanxWordmark className="h-7" />
-          {label && <span className="text-sm text-[#8d8a9e]">{label}</span>}
-        </div>
+      <div className="relative mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-4">
         <div className="flex items-center gap-2">
+          <div className="relative grid size-9 place-items-center rounded-xl border border-purple-500/40 bg-gradient-to-b from-[#1a1033] to-[#0d071a] shadow-[0_0_14px_rgba(168,85,247,0.3)]">
+            <InfinityIcon className="size-5 text-purple-300 drop-shadow-[0_2px_8px_rgba(192,132,252,0.9)]" />
+          </div>
+          <RanxWordmark className="h-6" />
+        </div>
+
+        {label && (
+          <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-sm font-medium text-[#c9c5d9]">
+            {label}
+          </span>
+        )}
+
+        <div className="flex items-center gap-1">
           <div
             aria-label={profile?.username ?? "Account"}
             className="grid size-9 place-items-center rounded-full border border-violet-400/30 bg-violet-500/15 text-sm font-semibold text-violet-200"

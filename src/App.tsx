@@ -4,6 +4,7 @@ import { AuthenticatedLayout } from "./components/layout/AuthenticatedLayout";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import SourcePage from "./pages/SourcePage";
 import TodoPage from "./pages/TodoPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 
@@ -19,7 +20,7 @@ export default function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/todo" element={<TodoPage />} />
           <Route path="/tables" element={<PlaceholderPage title="Tables" />} />
-          <Route path="/source" element={<PlaceholderPage title="Source" />} />
+          <Route path="/source" element={<SourcePage />} />
           <Route path="/profile" element={<PlaceholderPage title="Profile" />} />
         </Route>
       </Route>

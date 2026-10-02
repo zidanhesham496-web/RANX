@@ -6,6 +6,9 @@ import { fetchCompletedTaskIds, setTaskCompleted } from "../services/todoProgres
 import { TodoFilters } from "../components/todo/TodoFilters";
 import { TodoList } from "../components/todo/TodoList";
 
+const GLASS =
+  "rounded-3xl border border-violet-300/15 bg-[#0b0b16]/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] backdrop-blur-xl";
+
 export default function TodoPage() {
   const { session } = useAuth();
   const userId = session?.user.id;
@@ -25,7 +28,7 @@ export default function TodoPage() {
         setDoneIds(new Set(ids));
         setError(null);
       })
-      .catch(() => active && setError("Couldn't load your progress. Pull to refresh and try again."))
+      .catch(() => active && setError("Couldn't load your progress. Refresh the page and try again."))
       .finally(() => active && setLoading(false));
     return () => {
       active = false;
@@ -67,54 +70,51 @@ export default function TodoPage() {
   const percent = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
 
   return (
-    <div className="space-y-5">
-      <header>
-        <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight text-white">
-          To-Do List
-        </h1>
-        <p className="mt-1 text-sm text-[#8d8a9e]">
-          Keep track of your lectures, sections and assignments.
-        </p>
-      </header>
-
-      <section aria-label="Progress">
-        <p className="mb-2 text-sm text-[#c9c5d9]">
-          {done} of {tasks.length} completed
-        </p>
-        <div
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={percent}
-          className="h-1.5 overflow-hidden rounded-full bg-white/10"
-        >
+    <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-4">
+      <section aria-label="Progress and filters" className={`shrink-0 space-y-4 p-4 ${GLASS}`}>
+        <div>
+          <p className="mb-1.5 text-sm text-[#c9c5d9]">
+            {done} of {tasks.length} completed
+          </p>
           <div
-            className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-300 transition-all duration-300"
-            style={{ width: `${percent}%` }}
-          />
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={percent}
+            className="h-1.5 overflow-hidden rounded-full bg-white/10"
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-300 transition-all duration-300"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
         </div>
+        <TodoFilters value={filter} onChange={setFilter} />
       </section>
-
-      <TodoFilters value={filter} onChange={setFilter} />
 
       {error && (
         <p
           role="alert"
-          className="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-300"
+          className="shrink-0 rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2.5 text-sm text-red-300"
         >
           {error}
         </p>
       )}
 
-      {loading ? (
-        <div className="space-y-3" aria-busy="true">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-[72px] animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
-          ))}
-        </div>
-      ) : (
-        <TodoList tasks={visible} filter={filter} onToggle={toggleTask} />
-      )}
+      <section
+        aria-label="Tasks"
+        className={`min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 [scrollbar-color:rgba(167,139,250,0.35)_transparent] [scrollbar-width:thin] ${GLASS}`}
+      >
+        {loading ? (
+          <div className="space-y-3" aria-busy="true">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="h-[72px] animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
+            ))}
+          </div>
+        ) : (
+          <TodoList tasks={visible} filter={filter} onToggle={toggleTask} />
+        )}
+      </section>
     </div>
   );
 }

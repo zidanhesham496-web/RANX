@@ -1,4 +1,5 @@
-import { Check } from "lucide-react";
+import { Check, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import type { Task, TaskType } from "../../types/todo";
 
 const TYPE_LABEL: Record<TaskType, string> = {
@@ -14,6 +15,7 @@ export function TodoCard({
   task: Task;
   onToggle: (id: number) => void;
 }) {
+  const navigate = useNavigate();
   const meta = task.number
     ? `${TYPE_LABEL[task.type]} • ${String(task.number).padStart(2, "0")}`
     : TYPE_LABEL[task.type];
@@ -43,6 +45,7 @@ export function TodoCard({
         >
           {task.completed && <Check size={15} strokeWidth={3} />}
         </span>
+
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-3">
             <span className="truncate text-xs font-semibold tracking-wider text-violet-300/90">
@@ -58,6 +61,19 @@ export function TodoCard({
             {task.title}
           </p>
         </div>
+
+        <button
+          type="button"
+          aria-label={`Open sources for ${task.title}`}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigate(`/source?task=${task.id}`);
+          }}
+          className="grid size-10 shrink-0 place-items-center rounded-xl border border-violet-300/25 bg-violet-500/10 text-violet-200 transition hover:bg-violet-500/20 hover:text-white active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300"
+        >
+          <LogOut size={18} />
+        </button>
       </label>
     </li>
   );

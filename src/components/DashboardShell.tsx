@@ -1,3 +1,4 @@
+import { RanxWordmark } from "./RanxWordmark";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -26,10 +27,7 @@ export function DashboardShell({
   return (
     <main className="dashboard-page">
       <header className="dashboard-topbar">
-        <a className="brand-mark" href="/">
-          <span className="brand-glyph">R</span>
-          <span>RANX</span>
-        </a>
+        <a className="brand-mark" href="/" aria-label="RANX"><RanxWordmark className="h-7" /></a>
         <div className="topbar-user">
           <div className="avatar">{profile?.name.slice(0, 1).toUpperCase()}</div>
           <span>{profile?.username}</span>
