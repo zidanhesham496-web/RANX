@@ -66,8 +66,8 @@ export const ParticleBackground: React.FC = () => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1.4,
-        vy: (Math.random() - 0.5) * 1.4,
+        vx: (Math.random() - 0.5) * 1.0,
+        vy: (Math.random() - 0.5) * 1.0,
         radius: Math.random() * 2 + 1.2,
         sprite: sprites[Math.floor(Math.random() * sprites.length)],
       });
