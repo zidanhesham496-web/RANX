@@ -13,7 +13,7 @@ export function BottomNavigation() {
   return (
     <nav
       aria-label="Main"
-      className="fixed left-1/2 z-40 w-[min(92vw,26rem)] -translate-x-1/2 rounded-full border border-violet-300/15 bg-[#0d0d18]/75 p-1.5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.9),0_0_30px_-12px_rgba(139,92,246,0.35)] backdrop-blur-xl"
+      className="fixed left-1/2 z-40 w-[min(92vw,26rem)] -translate-x-1/2 rounded-full border border-violet-300/15 bg-[#0d0d18]/75 p-1.5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.9),0_0_30px_-12px_rgba(139,92,246,0.35)] backdrop-blur-md"
       style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
     >
       <ul className="grid grid-cols-5 gap-1">

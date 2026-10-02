@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { ParticleBackground } from "../ParticleBackground";
 import { AppHeader } from "./AppHeader";
@@ -16,7 +17,9 @@ export function AuthenticatedLayout() {
       />
       <AppHeader />
       <main className="relative mx-auto w-full max-w-2xl flex-1 px-5 pt-5">
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </main>
       <div className="relative pb-24 pt-6">
         <AppFooter />

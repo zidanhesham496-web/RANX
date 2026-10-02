@@ -31,7 +31,7 @@ export function AppHeader() {
 
   return (
     <header
-      className="sticky top-0 z-30 border-b border-white/5 bg-[#09090f]/70 backdrop-blur-xl"
+      className="sticky top-0 z-30 border-b border-white/5 bg-[#09090f]/70 backdrop-blur-md"
       style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
       <div className="relative mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-3 sm:px-4">

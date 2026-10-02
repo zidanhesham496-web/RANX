@@ -10,7 +10,7 @@ export default function SourcePage() {
   return (
     <section
       aria-label="Source"
-      className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col rounded-3xl border border-violet-300/15 bg-[#0b0b16]/70 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] backdrop-blur-xl"
+      className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col rounded-3xl border border-violet-300/15 bg-[#0b0b16]/85 sm:bg-[#0b0b16]/70 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] sm:backdrop-blur-xl"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">

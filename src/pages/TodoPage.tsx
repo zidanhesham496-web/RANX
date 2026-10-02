@@ -7,7 +7,7 @@ import { TodoFilters } from "../components/todo/TodoFilters";
 import { TodoList } from "../components/todo/TodoList";
 
 const GLASS =
-  "rounded-3xl border border-violet-300/15 bg-[#0b0b16]/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] backdrop-blur-xl";
+  "rounded-3xl border border-violet-300/15 bg-[#0b0b16]/85 sm:bg-[#0b0b16]/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] sm:backdrop-blur-xl";
 
 export default function TodoPage() {
   const { session } = useAuth();
