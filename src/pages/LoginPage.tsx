@@ -45,7 +45,8 @@ export default function LoginPage() {
       <ParticleBackground />
       <div className="pointer-events-none absolute left-1/2 top-1/4 z-0 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-purple-900/15 blur-[130px]" />
       <div className="pointer-events-none absolute bottom-10 right-10 z-0 h-[350px] w-[350px] rounded-full bg-indigo-900/10 blur-[110px]" />
-      <AuthCard
+      <div className="max-sm:[zoom:0.85]">
+        <AuthCard
         mode={authMode}
         onSubmit={handleSubmit}
         onToggleMode={handleToggleMode}
@@ -53,7 +54,8 @@ export default function LoginPage() {
         error={error}
         formData={formData}
         onChange={handleChange}
-      />
+        />
+      </div>
     </div>
   );
 }
