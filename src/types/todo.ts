@@ -3,6 +3,7 @@ export type TodoFilter = "ALL" | TaskType;
 
 export interface Task {
   id: number;
+  week: number;
   type: TaskType;
   subject: string;
   title: string;

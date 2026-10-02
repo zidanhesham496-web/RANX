@@ -39,7 +39,7 @@ export function AppHeader() {
           <div className="relative grid size-8 sm:size-9 place-items-center rounded-xl border border-purple-500/40 bg-gradient-to-b from-[#1a1033] to-[#0d071a] shadow-[0_0_14px_rgba(168,85,247,0.3)]">
             <InfinityIcon className="size-4 sm:size-5 text-purple-300 drop-shadow-[0_2px_8px_rgba(192,132,252,0.9)]" />
           </div>
-          <RanxWordmark className="h-[18px] sm:h-6" />
+          <RanxWordmark key={pathname} className="h-[18px] sm:h-6" />
         </div>
 
         {label && (

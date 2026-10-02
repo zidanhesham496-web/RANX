@@ -1,27 +1,19 @@
-import { useAuth } from "../context/AuthContext";
+import { AcademicProgress } from "../components/home/AcademicProgress";
+import { HomeError } from "../components/home/HomeError";
+import { HomeSkeleton } from "../components/home/HomeSkeleton";
+import { SubjectsSection } from "../components/home/SubjectsSection";
+import { UpcomingCard } from "../components/home/UpcomingCard";
+import { useHomeData } from "../hooks/useHomeData";
 
 export default function HomePage() {
-  const { profile } = useAuth();
-
+  const { status, firstName, progress, subjects, upcoming } = useHomeData();
+  if (status === "loading") return <HomeSkeleton />;
+  if (status === "error") return <HomeError />;
   return (
-    <div dir="rtl" className="space-y-5">
-      <section className="welcome-panel">
-        <div className="welcome-copy">
-          <span className="panel-index">01 <span /> مساحة شخصية</span>
-          <h2>كل شيء يبدأ<br />من هنا.</h2>
-          <p>هذه مساحتك الخاصة في RANX. أساس هادئ للعمل القادم.</p>
-        </div>
-        <div className="welcome-art" aria-hidden="true">
-          <div className="art-ring ring-outer" />
-          <div className="art-ring ring-inner" />
-          <div className="art-core">R</div>
-        </div>
-      </section>
-      <section className="profile-strip" aria-label="بيانات الحساب">
-        <div><span>اسم المستخدم</span><strong>@{profile?.username}</strong></div>
-        <div><span>رقم الهاتف</span><strong>{profile?.phone_number}</strong></div>
-        <div><span>نوع الحساب</span><strong>مستخدم</strong></div>
-      </section>
+    <div dir="ltr" className="space-y-7">
+      <AcademicProgress value={progress} name={firstName} />
+      <SubjectsSection subjects={subjects} />
+      {upcoming && <UpcomingCard item={upcoming} />}
     </div>
   );
 }

@@ -5,9 +5,12 @@ import { useAuth } from "../context/AuthContext";
 import { fetchCompletedTaskIds, setTaskCompleted } from "../services/todoProgress";
 import { TodoFilters } from "../components/todo/TodoFilters";
 import { TodoList } from "../components/todo/TodoList";
+import { TodoWeekFilter } from "../components/todo/TodoWeekFilter";
 
 const GLASS =
   "rounded-3xl border border-violet-300/15 bg-[#0b0b16]/85 sm:bg-[#0b0b16]/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_20px_50px_-20px_rgba(0,0,0,0.9),0_0_40px_-20px_rgba(139,92,246,0.35)] sm:backdrop-blur-xl";
+
+const WEEKS = Array.from(new Set(initialTasks.map((t) => t.week))).sort((a, b) => a - b);
 
 export default function TodoPage() {
   const { session } = useAuth();
@@ -15,6 +18,7 @@ export default function TodoPage() {
 
   const [doneIds, setDoneIds] = useState<Set<number>>(new Set());
   const [filter, setFilter] = useState<TodoFilter>("ALL");
+  const [week, setWeek] = useState<number>(WEEKS[0] ?? 1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,8 +40,10 @@ export default function TodoPage() {
   }, [userId]);
 
   const tasks = useMemo(
-    () => initialTasks.map((t) => ({ ...t, completed: doneIds.has(t.id) })),
-    [doneIds],
+    () => initialTasks
+        .filter((t) => t.week === week)
+        .map((t) => ({ ...t, completed: doneIds.has(t.id) })),
+    [doneIds, week],
   );
 
   const visible = useMemo(
@@ -71,6 +77,10 @@ export default function TodoPage() {
 
   return (
     <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-4">
+      <section aria-label="Week" className={`shrink-0 p-3 ${GLASS}`}>
+        <TodoWeekFilter weeks={WEEKS} value={week} onChange={setWeek} />
+      </section>
+
       <section aria-label="Progress and filters" className={`shrink-0 space-y-4 p-4 ${GLASS}`}>
         <div>
           <p className="mb-1.5 text-sm text-[#c9c5d9]">
