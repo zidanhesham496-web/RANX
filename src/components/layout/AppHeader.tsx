@@ -36,7 +36,7 @@ export function AppHeader() {
     >
       <div className="mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-5">
         <div className="flex items-center gap-3">
-          <RanxWordmark className="h-6" />
+          <RanxWordmark className="h-7" />
           {label && <span className="text-sm text-[#8d8a9e]">{label}</span>}
         </div>
         <div className="flex items-center gap-2">

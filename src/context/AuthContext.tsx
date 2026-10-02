@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const lastUserId = useRef<string | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -45,6 +47,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const hydrate = async (nextSession: Session | null) => {
       if (!mounted) return;
+      const nextId = nextSession?.user.id ?? null;
+      if (nextId && nextId === lastUserId.current) {
+        setSession(nextSession);
+        return;
+      }
+      lastUserId.current = nextId;
       setLoading(true);
       setSession(nextSession);
       if (!nextSession) {
