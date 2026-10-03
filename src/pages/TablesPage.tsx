@@ -72,10 +72,10 @@ function SubjectTile({ s }: { s: Subject }) {
   const { Icon } = s;
   return (
     <div
-      className={`flex h-[3.75rem] w-12 shrink-0 flex-col items-center justify-center gap-1.5 rounded-xl border ${s.tile} ${s.text}`}
+      className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border sm:h-[3.75rem] sm:w-12 sm:gap-1.5 sm:rounded-xl ${s.tile} ${s.text}`}
     >
-      <span className="text-[10px] font-bold leading-none tracking-wider">{s.code}</span>
-      <Icon size={20} strokeWidth={1.7} />
+      <span className="text-[9px] font-bold leading-none tracking-wider sm:text-[10px]">{s.code}</span>
+      <Icon className="size-4 sm:size-5" strokeWidth={1.7} />
     </div>
   );
 }
@@ -178,12 +178,12 @@ export default function TablesPage() {
   const nextSubject = next ? subjectOf(next.entry) : null;
 
   return (
-    <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-4">
-      <section aria-label="Days and section" className={`shrink-0 space-y-3 p-4 ${GLASS}`}>
+    <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-2.5 sm:gap-4">
+      <section aria-label="Days and section" className={`shrink-0 space-y-2 p-3 sm:space-y-3 sm:p-4 ${GLASS}`}>
         <div
           role="group"
           aria-label="Day"
-          className="grid grid-cols-7 gap-1 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
+          className="grid grid-cols-7 gap-0.5 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
         >
           {DAY_ORDER.map((d, i) => {
             const active = d === selectedDay;
@@ -194,26 +194,26 @@ export default function TablesPage() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setSelectedDay(d)}
-                className={`relative flex h-14 flex-col items-center justify-center rounded-xl text-[10px] transition active:scale-95 ${
+                className={`relative flex h-12 flex-col items-center justify-center rounded-xl text-[9px] tracking-tight transition active:scale-95 sm:h-14 sm:text-[10px] sm:tracking-normal ${
                   active
                     ? "border border-violet-300/30 bg-violet-500/20 text-white shadow-[0_0_16px_-4px_rgba(139,92,246,0.5)]"
                     : `border border-transparent hover:text-white ${off ? "text-[#8d8a9e]/60" : "text-[#8d8a9e]"}`
                 }`}
               >
                 <span>{SHORT[d]}</span>
-                <span className="text-base font-semibold leading-tight">{weekDates[i]}</span>
-                {d === todayDay && <span className="absolute bottom-1 size-1 rounded-full bg-violet-300" />}
+                <span className="text-sm font-semibold leading-tight sm:text-base">{weekDates[i]}</span>
+                {d === todayDay && <span className="absolute bottom-0.5 size-1 rounded-full bg-violet-300" />}
               </button>
             );
           })}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <span className="text-xs text-[#8d8a9e]">Section</span>
           <div
             role="group"
             aria-label="Section"
-            className="grid flex-1 grid-cols-5 gap-1 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
+            className="grid flex-1 grid-cols-5 gap-0.5 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
           >
             {[1, 2, 3, 4, 5].map((n) => {
               const active = n === section;
@@ -223,7 +223,7 @@ export default function TablesPage() {
                   type="button"
                   aria-pressed={active}
                   onClick={() => chooseSection(n)}
-                  className={`h-9 rounded-xl text-sm font-medium transition active:scale-95 ${
+                  className={`h-8 rounded-xl text-sm font-medium transition active:scale-95 sm:h-9 ${
                     active
                       ? "border border-violet-300/30 bg-violet-500/20 text-white"
                       : "border border-transparent text-[#8d8a9e] hover:text-white"
@@ -240,7 +240,7 @@ export default function TablesPage() {
       {error && (
         <p
           role="alert"
-          className="shrink-0 rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2.5 text-sm text-red-300"
+          className="shrink-0 rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm text-red-300"
         >
           {error}
         </p>
@@ -249,23 +249,23 @@ export default function TablesPage() {
       <section aria-label="Schedule" className={`flex min-h-0 flex-1 flex-col ${GLASS}`}>
         <h1 className="sr-only">{FULL[selectedDay]}</h1>
 
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain p-3 [scrollbar-color:rgba(167,139,250,0.35)_transparent] [scrollbar-width:thin]">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain p-2 [scrollbar-color:rgba(167,139,250,0.35)_transparent] [scrollbar-width:thin] sm:p-3">
           {!loading && section === null && !isHoliday && (
-            <p className="mb-3 px-1 text-xs text-violet-300/90">
+            <p className="mb-2 shrink-0 px-1 text-xs text-violet-300/90">
               Pick your section above to see your section classes.
             </p>
           )}
 
           {loading ? (
-            <div className="space-y-3" aria-busy="true">
+            <div className="space-y-2" aria-busy="true">
               {[0, 1, 2].map((i) => (
-                <div key={i} className="h-[92px] animate-pulse rounded-2xl border border-white/5 bg-white/[0.04]" />
+                <div key={i} className="h-16 animate-pulse rounded-xl border border-white/5 bg-white/[0.04]" />
               ))}
             </div>
           ) : dayEntries.length === 0 ? (
             isHoliday ? (
-              <div className="my-auto flex flex-col items-center py-6">
-                <RanxBot className="size-28" />
+              <div className="my-auto flex flex-col items-center py-4">
+                <RanxBot className="size-24 sm:size-28" />
                 <div key={selectedDay} className="rx-pop flex flex-col items-center">
                   <span className="rx-dot mt-1 size-1.5 rounded-full bg-violet-300/80" />
                   <span
@@ -288,7 +288,7 @@ export default function TablesPage() {
               />
             )
           ) : (
-            <ul key={selectedDay} className="space-y-3">
+            <ul key={selectedDay} className="flex flex-1 flex-col gap-2">
               {dayEntries.map((e, i) => {
                 const s = subjectOf(e);
                 const live = e.id === liveId;
@@ -301,75 +301,75 @@ export default function TablesPage() {
                     {i === markerIndex && (
                       <li
                         aria-hidden="true"
-                        className="flex items-center gap-2 text-[11px] font-semibold tracking-wider text-violet-300"
+                        className="flex shrink-0 items-center gap-2 text-[10px] font-semibold tracking-wider text-violet-300"
                       >
                         <span>NOW {now.toTimeString().slice(0, 5)}</span>
                         <span className="h-px flex-1 bg-violet-400/40" />
                       </li>
                     )}
-                    <li className="rx-rise" style={{ animationDelay: `${Math.min(i, 8) * 45}ms` }}>
+                    <li
+                      className="rx-rise flex min-h-[3.25rem] max-h-[5rem] flex-1 basis-0 sm:max-h-[6rem]"
+                      style={{ animationDelay: `${Math.min(i, 8) * 45}ms` }}
+                    >
                       <div
-                        className={`rounded-2xl border p-3 transition ${
+                        className={`relative flex w-full items-center gap-2.5 overflow-hidden rounded-xl border px-2.5 py-1.5 transition sm:gap-3 sm:rounded-2xl sm:px-3 sm:py-2 ${
                           live
                             ? "border-violet-300/50 bg-violet-500/15 shadow-[0_0_24px_-8px_rgba(139,92,246,0.6)]"
                             : "border-violet-300/15 bg-gradient-to-br from-white/[0.07] to-white/[0.02]"
                         } ${past ? "opacity-55" : ""}`}
                       >
-                        <div className="flex items-center gap-3">
-                          <SubjectTile s={s} />
+                        <SubjectTile s={s} />
 
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2">
-                              <span
-                                className={`rounded-md border px-2 py-0.5 text-[10px] font-semibold tracking-wider ${BADGE[e.kind]}`}
-                              >
-                                {e.kind}
-                              </span>
-                              <span className="text-[11px] text-[#8d8a9e]">{durText(len)}</span>
-                              {live && (
-                                <span className="text-[11px] font-semibold tracking-wider text-violet-200">NOW</span>
-                              )}
-                            </div>
-                            <p dir="auto" className="mt-1 text-left text-[13px] leading-snug text-white/60">
-                              {e.title}
-                            </p>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex min-w-0 items-center gap-1.5 text-[11px]">
+                            <span
+                              className={`shrink-0 rounded-md border px-1.5 py-px text-[9px] font-semibold tracking-wider ${BADGE[e.kind]}`}
+                            >
+                              {e.kind}
+                            </span>
+                            {live ? (
+                              <span className="shrink-0 font-semibold text-violet-200">ends in {durText(left)}</span>
+                            ) : (
+                              <span className="shrink-0 text-[#8d8a9e]">{durText(len)}</span>
+                            )}
                             {e.room && (
-                              <p className="mt-1 flex items-center gap-1 text-xs text-[#8d8a9e]">
-                                <MapPin size={12} className="shrink-0" />
-                                <span dir="auto">{e.room}</span>
-                              </p>
+                              <span className="flex min-w-0 items-center gap-0.5 text-[#8d8a9e]">
+                                <MapPin size={10} className="shrink-0" />
+                                <span dir="auto" className="truncate">
+                                  {e.room}
+                                </span>
+                              </span>
                             )}
                           </div>
-
-                          <div
-                            className={`relative ml-auto flex shrink-0 flex-col items-end overflow-hidden rounded-xl border px-2.5 py-1.5 tabular-nums ${s.tile} ${
-                              live ? "rx-livepulse" : "rx-slide"
-                            }`}
-                            style={live ? undefined : { animationDelay: `${Math.min(i, 8) * 60 + 120}ms` }}
+                          <p
+                            dir="auto"
+                            className="mt-0.5 line-clamp-2 text-left text-[12px] leading-snug text-white/70 sm:text-[13px]"
                           >
-                            {live && (
-                              <span aria-hidden="true" className="rx-shimmer pointer-events-none absolute inset-0" />
-                            )}
-                            <span className={`relative text-sm font-semibold leading-none ${s.text}`}>
-                              {hhmm(e.start_time)}
-                            </span>
-                            <span className="relative my-1.5 h-px w-full bg-white/15" />
-                            <span className="relative text-xs leading-none text-[#8d8a9e]">
-                              {hhmm(e.end_time)}
-                            </span>
-                          </div>
+                            {e.title}
+                          </p>
+                        </div>
+
+                        <div
+                          className={`relative ml-auto flex shrink-0 flex-col items-center overflow-hidden rounded-lg border px-2 py-1 tabular-nums ${s.tile} ${
+                            live ? "rx-livepulse" : "rx-slide"
+                          }`}
+                          style={live ? undefined : { animationDelay: `${Math.min(i, 8) * 60 + 120}ms` }}
+                        >
+                          {live && <span aria-hidden="true" className="rx-shimmer pointer-events-none absolute inset-0" />}
+                          <span className={`relative text-xs font-semibold leading-none ${s.text}`}>
+                            {hhmm(e.start_time)}
+                          </span>
+                          <span className="relative my-1 h-px w-full bg-white/15" />
+                          <span className="relative text-[11px] leading-none text-[#8d8a9e]">{hhmm(e.end_time)}</span>
                         </div>
 
                         {live && (
-                          <div className="mt-3">
-                            <div className="h-1 overflow-hidden rounded-full bg-white/10">
-                              <div
-                                className={`h-full rounded-full transition-all duration-500 ${s.bar}`}
-                                style={{ width: `${pct}%` }}
-                              />
-                            </div>
-                            <p className="mt-1 text-[11px] text-[#8d8a9e]">ends in {durText(left)}</p>
-                          </div>
+                          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 bg-white/10">
+                            <span
+                              className={`block h-full transition-all duration-500 ${s.bar}`}
+                              style={{ width: `${pct}%` }}
+                            />
+                          </span>
                         )}
                       </div>
                     </li>
@@ -381,12 +381,12 @@ export default function TablesPage() {
         </div>
 
         {!loading && dayEntries.length > 0 && (
-          <div key={`summary-${selectedDay}`} className="shrink-0 border-t border-white/5 px-4 pb-3 pt-3">
+          <div key={`summary-${selectedDay}`} className="shrink-0 border-t border-white/5 px-4 pb-2.5 pt-2 sm:pb-3 sm:pt-3">
             <p className="rx-rise flex items-center gap-2 text-sm font-medium text-violet-200">
               <span className="rx-dot size-1.5 rounded-full bg-violet-300" />
               {dayEntries.length} {dayEntries.length === 1 ? "class" : "classes"} · {durText(totalMin)}
             </p>
-            <div className="mt-2 flex h-1.5 gap-0.5 overflow-hidden rounded-full" aria-hidden="true">
+            <div className="mt-1.5 flex h-1.5 gap-0.5 overflow-hidden rounded-full" aria-hidden="true">
               {dayEntries.map((e, i) => (
                 <span
                   key={e.id}
@@ -403,11 +403,14 @@ export default function TablesPage() {
       </section>
 
       {next && nextSubject && (
-        <section aria-label="Next class" className={`flex shrink-0 items-center gap-3 px-4 py-3 ${GLASS}`}>
+        <section
+          aria-label="Next class"
+          className={`flex shrink-0 items-center gap-2.5 px-3 py-2 sm:gap-3 sm:px-4 sm:py-3 ${GLASS}`}
+        >
           <SubjectTile s={nextSubject} />
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-[#8d8a9e]">Next up</p>
-            <p dir="auto" className="truncate text-left text-[13px] text-white/60">
+            <p className="text-[11px] text-[#8d8a9e] sm:text-xs">Next up</p>
+            <p dir="auto" className="truncate text-left text-[13px] text-white/70">
               {next.entry.title}
             </p>
           </div>
