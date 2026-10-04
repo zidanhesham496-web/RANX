@@ -1,5 +1,5 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { Apple, BookOpen, Bone, CalendarDays, Egg, FlaskConical, HeartPulse, MapPin, Users } from "lucide-react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Apple, BookOpen, Bone, CalendarDays, ChevronDown, Egg, FlaskConical, HeartPulse, MapPin, Users } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { fetchSection, fetchTimetable, saveSection } from "../services/timetable";
 import type { EntryKind, TimetableEntry } from "../types/timetable";
@@ -90,6 +90,8 @@ export default function TablesPage() {
   const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
   const [selectedDay, setSelectedDay] = useState(() => new Date().getDay());
+  const [filterOpen, setFilterOpen] = useState(false);
+  const autoOpened = useRef(false);
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 30000);
@@ -113,6 +115,13 @@ export default function TablesPage() {
       active = false;
     };
   }, [userId]);
+
+  useEffect(() => {
+    if (!loading && section === null && !autoOpened.current) {
+      autoOpened.current = true;
+      setFilterOpen(true);
+    }
+  }, [loading, section]);
 
   const chooseSection = async (value: number) => {
     if (!userId) return;
@@ -179,7 +188,7 @@ export default function TablesPage() {
 
   return (
     <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-2.5 sm:gap-4">
-      <section aria-label="Days and section" className={`shrink-0 space-y-2 p-3 sm:space-y-3 sm:p-4 ${GLASS}`}>
+      <section aria-label="Days and section" className={`shrink-0 space-y-1.5 p-3 pb-1.5 sm:space-y-2 sm:p-4 sm:pb-2 ${GLASS}`}>
         <div
           role="group"
           aria-label="Day"
@@ -208,33 +217,54 @@ export default function TablesPage() {
           })}
         </div>
 
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          <span className="text-xs text-[#8d8a9e]">Section</span>
-          <div
-            role="group"
-            aria-label="Section"
-            className="grid flex-1 grid-cols-5 gap-0.5 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
-          >
-            {[1, 2, 3, 4, 5].map((n) => {
-              const active = n === section;
-              return (
-                <button
-                  key={n}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => chooseSection(n)}
-                  className={`h-8 rounded-xl text-sm font-medium transition active:scale-95 sm:h-9 ${
-                    active
-                      ? "border border-violet-300/30 bg-violet-500/20 text-white"
-                      : "border border-transparent text-[#8d8a9e] hover:text-white"
-                  }`}
-                >
-                  {n}
-                </button>
-              );
-            })}
+        <div
+          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+            filterOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div
+              id="section-filter"
+              role="group"
+              aria-label="Section"
+              className="grid grid-cols-5 gap-0.5 rounded-2xl border border-white/10 bg-white/[0.03] p-1"
+            >
+              {[1, 2, 3, 4, 5].map((n) => {
+                const active = n === section;
+                return (
+                  <button
+                    key={n}
+                    type="button"
+                    tabIndex={filterOpen ? 0 : -1}
+                    aria-pressed={active}
+                    onClick={() => chooseSection(n)}
+                    className={`h-9 rounded-xl text-xs font-medium tracking-wide transition active:scale-95 ${
+                      active
+                        ? "border border-violet-300/30 bg-violet-500/20 text-white"
+                        : "border border-transparent text-[#8d8a9e] hover:text-white"
+                    }`}
+                  >
+                    SEC {n}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
+
+        <button
+          type="button"
+          aria-expanded={filterOpen}
+          aria-controls="section-filter"
+          aria-label={filterOpen ? "Hide section filter" : "Show section filter"}
+          onClick={() => setFilterOpen((v) => !v)}
+          className="mx-auto flex h-7 w-16 items-center justify-center gap-1 rounded-full text-[#8d8a9e] transition hover:text-white active:scale-95"
+        >
+          {!filterOpen && section !== null && (
+            <span className="text-[10px] font-semibold tracking-wider text-violet-300">SEC {section}</span>
+          )}
+          <ChevronDown size={16} className={`transition-transform duration-300 ${filterOpen ? "rotate-180" : ""}`} />
+        </button>
       </section>
 
       {error && (

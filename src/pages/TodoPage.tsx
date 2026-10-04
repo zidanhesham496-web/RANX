@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Check, ChevronDown } from "lucide-react";
 import { initialTasks } from "../data/todos";
 import type { TodoFilter } from "../types/todo";
 import { useAuth } from "../context/AuthContext";
@@ -18,6 +19,7 @@ export default function TodoPage() {
 
   const [doneIds, setDoneIds] = useState<Set<number>>(new Set());
   const [filter, setFilter] = useState<TodoFilter>("ALL");
+  const [filterOpen, setFilterOpen] = useState(false);
   const [week, setWeek] = useState<number>(WEEKS[0] ?? 1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +42,8 @@ export default function TodoPage() {
   }, [userId]);
 
   const tasks = useMemo(
-    () => initialTasks
+    () =>
+      initialTasks
         .filter((t) => t.week === week)
         .map((t) => ({ ...t, completed: doneIds.has(t.id) })),
     [doneIds, week],
@@ -74,32 +77,78 @@ export default function TodoPage() {
 
   const done = tasks.filter((t) => t.completed).length;
   const percent = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+  const complete = tasks.length > 0 && done === tasks.length;
 
   return (
-    <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-4">
-      <section aria-label="Week" className={`shrink-0 p-3 ${GLASS}`}>
+    <div className="flex h-[calc(100dvh-15rem)] min-h-[24rem] flex-col gap-3 sm:gap-4">
+      <section aria-label="Week, progress and filters" className={`shrink-0 p-3 pb-1.5 sm:p-4 sm:pb-2 ${GLASS}`}>
         <TodoWeekFilter weeks={WEEKS} value={week} onChange={setWeek} />
-      </section>
 
-      <section aria-label="Progress and filters" className={`shrink-0 space-y-4 p-4 ${GLASS}`}>
-        <div>
-          <p className="mb-1.5 text-sm text-[#c9c5d9]">
-            {done} of {tasks.length} completed
-          </p>
+        <div className="mt-3 border-t border-white/5 pt-3">
+          <div className="flex items-end justify-between">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-3xl font-semibold leading-none tabular-nums text-white">{done}</span>
+              <span className="text-sm text-[#8d8a9e]">/ {tasks.length} done</span>
+            </div>
+            {complete ? (
+              <span className="rx-pop flex items-center gap-1 text-sm font-semibold text-emerald-300">
+                <Check size={16} strokeWidth={3} />
+                All done
+              </span>
+            ) : (
+              <span className="text-sm font-semibold tabular-nums text-violet-300">{percent}%</span>
+            )}
+          </div>
+
           <div
             role="progressbar"
+            aria-label="Completed tasks"
             aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={percent}
-            className="h-1.5 overflow-hidden rounded-full bg-white/10"
+            aria-valuemax={tasks.length}
+            aria-valuenow={done}
+            className="mt-2.5 flex h-2.5 gap-1"
           >
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-300 transition-all duration-300"
-              style={{ width: `${percent}%` }}
-            />
+            {tasks.map((t, i) => (
+              <span
+                key={t.id}
+                className={`h-full flex-1 rounded-full transition-all duration-500 ${
+                  t.completed
+                    ? complete
+                      ? "bg-gradient-to-r from-emerald-400 to-emerald-300 shadow-[0_0_10px_-2px_rgba(52,211,153,0.7)]"
+                      : "bg-gradient-to-r from-violet-500 to-violet-300 shadow-[0_0_10px_-2px_rgba(139,92,246,0.8)]"
+                    : "bg-white/10"
+                }`}
+                style={{ transitionDelay: `${Math.min(i, 12) * 30}ms` }}
+              />
+            ))}
           </div>
         </div>
-        <TodoFilters value={filter} onChange={setFilter} />
+
+        <div
+          className={`mt-3 grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+            filterOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <div id="todo-type-filter" className="overflow-hidden" inert={!filterOpen}>
+            <TodoFilters value={filter} onChange={setFilter} />
+          </div>
+        </div>
+
+        <button
+          type="button"
+          aria-expanded={filterOpen}
+          aria-controls="todo-type-filter"
+          aria-label={filterOpen ? "Hide type filter" : "Show type filter"}
+          onClick={() => setFilterOpen((v) => !v)}
+          className={`mx-auto mt-0.5 flex h-7 min-w-16 items-center justify-center gap-1 rounded-full px-2 transition active:scale-95 ${
+            filter !== "ALL" ? "text-violet-300" : "text-[#8d8a9e] hover:text-white"
+          }`}
+        >
+          {!filterOpen && filter !== "ALL" && (
+            <span className="text-[10px] font-semibold tracking-wider">{filter}</span>
+          )}
+          <ChevronDown size={16} className={`transition-transform duration-300 ${filterOpen ? "rotate-180" : ""}`} />
+        </button>
       </section>
 
       {error && (
