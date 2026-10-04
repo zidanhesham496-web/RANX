@@ -8,7 +8,7 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const TodoPage = lazy(() => import("./pages/TodoPage"));
 const SourcePage = lazy(() => import("./pages/SourcePage"));
-const PlaceholderPage = lazy(() => import("./pages/PlaceholderPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const TablesPage = lazy(() => import("./pages/TablesPage"));
 const AdminDashboardPage = lazy(() => import("./pages/AdminDashboardPage"));
 
@@ -26,7 +26,7 @@ export default function App() {
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/source" element={<SourcePage />} />
             <Route path="/tables" element={<TablesPage />} />
-            <Route path="/profile" element={<PlaceholderPage title="Profile" />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Route>
         <Route element={<ProtectedRoute role="admin" />}>
